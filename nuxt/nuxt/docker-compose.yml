@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  laravel:
+    container_name: "laravel-app"
+    image: "app-laravel:4.0"
+    ports: 
+      - 9300:9000
+    networks:
+      - java_network
+  nuxt:
+    container_name: "nuxt-app"
+    image: "my_app:3.0"
+    ports:
+      - 3700:3000
+    networks:
+      - java_network
+    depends_on:
+      - laravel
+    environment:
+      - NAME=Docker
+      - LARAVEL_HOST=laravel
+      - LARAVEL_PORT=9300
+      - NUXT_HOST=nuxt
+      - NUXT_PORT=3700
+    networks:
+      - java_network
+
+networks:
+  java_network:
+    name: java_network
+
+
+
